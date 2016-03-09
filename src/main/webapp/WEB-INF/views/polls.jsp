@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
- <strong>It's polls, baby</strong>
+	<a href="${homeUri}">Go back</a>
+	<h1>Polls list</h1>
 </body>
 </html>

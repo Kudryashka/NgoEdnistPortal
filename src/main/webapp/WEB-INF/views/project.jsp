@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<strong>It's project with id ${projectId}, baby</strong>
+    <a href="${projectsUri}">Go back</a>
+	<h1>The project with id ${projectId}</h1>
 </body>
 </html>

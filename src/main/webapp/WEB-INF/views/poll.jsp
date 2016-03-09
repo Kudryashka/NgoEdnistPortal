@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<strong>It's poll with id ${pollId}, baby</strong>
+    <a href="${pollsUri}">Go back</a>
+	<h1>The poll with id ${pollId}</h1>
 </body>
 </html>

@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
- <strong>It's projects, baby</strong>
+	<a href="${homeUri}">Go back</a>
+	<h1>Projects list</h1>
 </body>
 </html>

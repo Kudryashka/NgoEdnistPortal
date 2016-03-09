@@ -8,6 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
- <strong>It's home page, baby</strong>
+	<h1>Home page</h1>
+	<ul>
+		<li><a href="${projectsUri}">Projects</a></li>
+		<li><a href="${pollsUri}">Polls</a></li>
+	</ul>
 </body>
 </html>
