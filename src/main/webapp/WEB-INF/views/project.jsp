@@ -8,6 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
- <strong>It's home page, baby</strong>
+	<strong>It's project with id ${projectId}, baby</strong>
 </body>
 </html>

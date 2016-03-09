@@ -8,6 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
- <strong>It's home page, baby</strong>
+ <strong>It's polls, baby</strong>
 </body>
 </html>

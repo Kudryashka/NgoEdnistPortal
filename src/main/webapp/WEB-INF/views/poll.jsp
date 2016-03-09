@@ -8,6 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
- <strong>It's home page, baby</strong>
+	<strong>It's poll with id ${pollId}, baby</strong>
 </body>
 </html>
