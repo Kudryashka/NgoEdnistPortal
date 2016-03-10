@@ -19,7 +19,7 @@ public interface UriConstants {
 	/**
 	 * Exactly one NGO's project with specified <i>id</i>  
 	 */
-	String PROJECT = "/project/{id}";
+	String PROJECT = "/projects/{id}";
 	
 	/**
 	 * NGO polls list
@@ -29,5 +29,5 @@ public interface UriConstants {
 	/**
 	 * Exactly one NGO's poll with specified <i>id</id>
 	 */
-	String POLL = "/poll/{id}";
+	String POLL = "/polls/{id}";
 }

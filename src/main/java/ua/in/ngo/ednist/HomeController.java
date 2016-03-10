@@ -68,14 +68,10 @@ public class HomeController {
 	public String polls(Locale locale, Model model) {
 		logger.info("Http. All polls requested.");
 		
-		model.addAttribute("homeUri", HOME);
-		
-		//Debug logs
 		List<Poll> polls = pollService.listPolls();
-		logger.info("polls list size : " + polls.size());
-		for (Poll p : polls) {
-			logger.info("poll uri alias : " + p.getUriAlias());
-		}
+		
+		model.addAttribute("homeUri", HOME);
+		model.addAttribute("polls", polls);
 		
 		return "polls";
 	}
