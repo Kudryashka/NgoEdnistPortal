@@ -18,4 +18,9 @@ public class PollService {
 	public List<Poll> listPolls() {
 		return pollDAO.listPolls();
 	}
+	
+	@Transactional
+	public Poll getPollByAlias(String alias) {
+		return pollDAO.getPollByAlias(alias);
+	}
 }

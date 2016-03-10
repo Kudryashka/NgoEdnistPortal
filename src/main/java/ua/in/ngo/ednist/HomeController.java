@@ -81,8 +81,10 @@ public class HomeController {
 			Model model) throws Exception {
 		logger.info("Http. A poll requested. Id: " + pollId);
 		
+		Poll poll = pollService.getPollByAlias(pollId);
+		
 		model.addAttribute("pollsUri", ALL_POLLS);
-		model.addAttribute("pollId", pollId);
+		model.addAttribute("pollId", poll.getUriAlias());
 		
 		return "poll";
 	}
