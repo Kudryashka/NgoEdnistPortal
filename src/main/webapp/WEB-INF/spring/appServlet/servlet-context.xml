@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -23,6 +25,45 @@
 	
 	<context:component-scan base-package="ua.in.ngo.ednist" />
 	
+	<!-- Data source definition -->
+	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<!-- Should be configured with real database values. It's bad to share real values on public repository. -->
+		<beans:property name="driverClassName" value="org.postgresql.Driver"></beans:property>
+		<beans:property name="url" value="jdbc:postgresql://localhost:5432/ngo_ednist_db"></beans:property>
+		<beans:property name="username" value="postgres"></beans:property>
+		<beans:property name="password" value=""></beans:property>
+	</beans:bean>
 	
+	<!-- Hibernate SessionFactory definition -->
+	<beans:bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource"></beans:property>
+		<beans:property name="annotatedClasses">
+			<beans:list>
+				<beans:value>ua.in.ngo.ednist.polls.Poll</beans:value>
+			</beans:list>
+		</beans:property>
+		<beans:property name="hibernateProperties">
+			<beans:props>
+				<beans:prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</beans:prop>
+				<!-- Only for development time. -->
+				<beans:prop key="hibernate.show_sql">true</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
+	<beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<beans:property name="sessionFactory" ref="hibernateSessionFactory"></beans:property>
+	</beans:bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<beans:bean id="pollDAO" class="ua.in.ngo.ednist.polls.PollDAO">
+		<beans:property name="sessionFactory" ref="hibernateSessionFactory"></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="pollService" class="ua.in.ngo.ednist.polls.PollService">
+		<beans:property name="pollDAO" ref="pollDAO"></beans:property>
+	</beans:bean>
 	
 </beans:beans>
