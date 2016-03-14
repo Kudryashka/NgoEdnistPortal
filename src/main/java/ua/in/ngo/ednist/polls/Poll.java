@@ -12,12 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="polls")
+@Table(name="poll")
 public class Poll {
 
-	public static enum ViewType {
-		unique_page
-	}
+//	public static enum ViewType {
+//		unique_page
+//	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,12 +33,12 @@ public class Poll {
 	@Column(name = "name", nullable = false, unique = true, length = 150)
 	private String name;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "view_type", nullable = false)
-	private ViewType viewType;
+//	@Enumerated(EnumType.STRING)
+//	@Column(name = "view_type", nullable = false)
+//	private ViewType viewType;
 	
-	@Column(name = "view_name", nullable = false, length = 50)
-	private String viewName;
+//	@Column(name = "view_name", nullable = false, length = 50)
+//	private String viewName;
 	
 	public int getId() {
 		return id;
@@ -70,21 +70,5 @@ public class Poll {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public ViewType getViewType() {
-		return viewType;
-	}
-
-	public void setViewType(ViewType viewType) {
-		this.viewType = viewType;
-	}
-
-	public String getViewName() {
-		return viewName;
-	}
-
-	public void setViewName(String viewName) {
-		this.viewName = viewName;
 	}
 }
