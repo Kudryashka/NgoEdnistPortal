@@ -26,13 +26,21 @@
 	<context:component-scan base-package="ua.in.ngo.ednist" />
 	
 	<!-- Data source definition -->
+	<!-- 
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
+	-->
 		<!-- Should be configured with real database values. It's bad to share real values on public repository. -->
+	<!-- 
 		<beans:property name="driverClassName" value="org.postgresql.Driver"></beans:property>
 		<beans:property name="url" value="jdbc:postgresql://localhost:5432/ngo_ednist_db"></beans:property>
 		<beans:property name="username" value="postgres"></beans:property>
 		<beans:property name="password" value=""></beans:property>
+	</beans:bean>
+	-->
+	
+	<beans:bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<beans:property name="jndiName" value="java:comp/env/jdbc/postgres" />
 	</beans:bean>
 	
 	<!-- Hibernate SessionFactory definition -->
