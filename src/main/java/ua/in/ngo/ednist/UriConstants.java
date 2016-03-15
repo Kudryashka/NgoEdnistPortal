@@ -1,33 +1,56 @@
 package ua.in.ngo.ednist;
 
 public interface UriConstants {
-
-	/*
-	 * HTTP URI CONSTANTS
-	 */
 	
 	/**
-	 * NGO home page HTTP URI
+	 * <b>NGO home URI</b>
+	 * <hr>
+	 * Actions:
+	 * <ol>
+	 * <li>GET - get home page</li>
+	 * </ol>
 	 */
 	String HOME = "/";
 	
 	/**
-	 * NGO projects list
+	 * <b>NGO projects list</b>
 	 */
 	String ALL_PROJECTS = "/projects";
 	
 	/**
-	 * Exactly one NGO's project with specified <i>id</i>  
+	 * <b>Exactly one NGO's project with specified <i>id</i></b>  
 	 */
 	String PROJECT = "/projects/{id}";
 	
 	/**
-	 * NGO polls list
+	 * <b>NGO polls list</b>
+	 * <hr>
+	 * Actions:
+	 * <ol>
+	 * <li>GET - get all polls</li>
+	 * <li>POST - add new poll to the list</li>
+	 * </ol>
 	 */
 	String ALL_POLLS = "/polls";
 	
 	/**
-	 * Exactly one NGO's poll with specified <i>id</id>
+	 * <b>Exactly one NGO's poll with specified <i>id</i></b>
+	 * <hr>
+	 * Actions:
+	 * <ol>
+	 * <li>GET - get single poll with the id</li>
+	 * </ol>
 	 */
 	String POLL = "/polls/{id}";
+	
+	/**
+	 * <b>Answers for a poll with specified <i>id</i></b>
+	 * <hr>
+	 * Actions:
+	 * <ol>
+	 * <li>GET - get all answers for the poll</li>
+	 * <li>POST - add new answer for the poll</li>
+	 * </ol>
+	 */
+	String POLL_ANSWERS = "/polls/{id}/answers";
 }
