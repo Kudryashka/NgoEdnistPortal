@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ua.in.ngo.ednist.polls.Poll;
 import ua.in.ngo.ednist.polls.PollNotFoundException;
 import ua.in.ngo.ednist.polls.PollService;
+import ua.in.ngo.ednist.polls.dao.Poll;
 
 import static ua.in.ngo.ednist.UriConstants.*;
 
@@ -88,9 +88,7 @@ public class HomeController {
 			throw new PollNotFoundException(pollId);
 		}
 		
-		model.addAttribute("pollsUri", ALL_POLLS);
-		model.addAttribute("pollId", poll.getUriAlias());
-		
-		return "poll";
+		model.addAttribute("poll", poll);
+		return "poll_page";
 	}
 }
