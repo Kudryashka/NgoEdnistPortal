@@ -1,4 +1,4 @@
-package ua.in.ngo.ednist.polls;
+package ua.in.ngo.ednist.polls.dao;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PollDAO {
+public class PollDAOImpl {
 
-	private static final Logger logger = LoggerFactory.getLogger(PollDAO.class);
+	private static final Logger logger = LoggerFactory.getLogger(PollDAOImpl.class);
 	
 	private SessionFactory sessionFactory;
 	

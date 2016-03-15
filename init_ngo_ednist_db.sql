@@ -3,10 +3,13 @@
 -- NGO Projects main entity
 CREATE TABLE project (
   id SERIAL PRIMARY KEY,
+  --modification information
   insert_time TIMESTAMP NOT NULL,
-  last_modified_time TIMESTAMP NOT NULL,
+  last_modify_time TIMESTAMP NOT NULL,
+  --general project information
   name VARCHAR(150) UNIQUE NOT NULL,
-  uri_alias VARCHAR(50) UNIQUE NOT NULL
+  description TEXT,
+  uri_alias VARCHAR(100) UNIQUE NOT NULL
 );
 
 --Polls related entities
@@ -24,7 +27,7 @@ CREATE TABLE poll (
   status CHAR(8) CHECK (status IN ('draft', 'active', 'obsolete')) DEFAULT 'draft',
   poll_start_time TIMESTAMP,
   poll_obsolete_time TIMESTAMP,
-  corr_project_id INTEGER REFERENCES project(id)
+  corr_project_id INTEGER REFERENCES project(id) ON DELETE RESTRICT
 );
 
 --Poll block is a logical grouped questions in a poll. Has zero or more relative poll questions.
