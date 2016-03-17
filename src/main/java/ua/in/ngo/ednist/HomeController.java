@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ua.in.ngo.ednist.polls.PollNotFoundException;
 import ua.in.ngo.ednist.polls.PollService;
 import ua.in.ngo.ednist.polls.dao.Poll;
+import ua.in.ngo.ednist.polls.dao.PollAnswer;
+import ua.in.ngo.ednist.polls.forms.PollAnswerForm;
 
 import static ua.in.ngo.ednist.UriConstants.*;
 
@@ -83,12 +86,29 @@ public class HomeController {
 		logger.info("Http. A poll requested. Id: " + pollId);
 		
 		Poll poll = pollService.getPollByAlias(pollId);
-		
 		if (poll == null) {
 			throw new PollNotFoundException(pollId);
 		}
 		
 		model.addAttribute("poll", poll);
+		model.addAttribute("pollAnswerForm", new PollAnswerForm());
 		return "poll_page";
+	}
+	
+	@RequestMapping(value = POLL, method = RequestMethod.POST)
+	public String poll(@PathVariable("id") String pollId,
+			@ModelAttribute PollAnswerForm pollAnswerForm, 
+			Locale locale, Model model) throws Exception {
+		logger.info(String.format("Http. An answer for a poll with id=%s received.", pollId));
+		
+		Poll poll = pollService.getPollByAlias(pollId);
+		if (poll == null) {
+			throw new PollNotFoundException(pollId);
+		}
+		
+		PollAnswer answer = pollAnswerForm.toPollAnswer(poll);
+		//todo save to persist
+		
+		return "redirect:/polls";
 	}
 }

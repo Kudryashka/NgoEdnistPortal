@@ -38,6 +38,19 @@ h2 {
   margin: 0 auto;
 }
 
+#banner-container {
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.banner {
+	max-height: 5em;
+	margin: 0 1em;
+}
+
 @media print {
 	
 	.no-print, .no-print * {

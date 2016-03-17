@@ -75,4 +75,19 @@ public class PollAnswer {
 	public void setPollQuestionAnswers(Set<PollQuestionAnswer> pollQuestionAnswers) {
 		this.pollQuestionAnswers = pollQuestionAnswers;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Poll answer with ID: ").append(id).append("\n ")
+			.append("Poll: ").append(poll.getName()).append("\n ")
+			.append("URI: ").append(poll.getUriAlias()).append("\n ")
+			.append("Answer insert time: ").append(insertTime).append("\n ")
+			.append("Answer update time: ").append(lastModifyTime).append("\n ")
+			.append("Question answers: ").append("\n ");
+		for (PollQuestionAnswer answer : pollQuestionAnswers) {
+			builder.append("[").append(answer.toString()).append("]").append("\n ");
+		}
+		return builder.toString();
+	}
 }

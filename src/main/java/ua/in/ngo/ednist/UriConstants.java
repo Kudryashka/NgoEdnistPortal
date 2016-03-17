@@ -39,6 +39,7 @@ public interface UriConstants {
 	 * Actions:
 	 * <ol>
 	 * <li>GET - get single poll with the id</li>
+	 * <li>POST - add new answer for the poll</li>
 	 * </ol>
 	 */
 	String POLL = "/polls/{id}";
@@ -49,7 +50,6 @@ public interface UriConstants {
 	 * Actions:
 	 * <ol>
 	 * <li>GET - get all answers for the poll</li>
-	 * <li>POST - add new answer for the poll</li>
 	 * </ol>
 	 */
 	String POLL_ANSWERS = "/polls/{id}/answers";
