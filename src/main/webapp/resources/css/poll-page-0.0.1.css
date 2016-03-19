@@ -29,6 +29,18 @@ h2 {
   resize: none;
 }
 
+.additional-input {
+	width: 100%;
+	height: 3em;
+	resize: none;
+}
+
+.textarea-item {
+  width: 100%;
+  height: 5em;
+  resize: none;
+}
+
 .submit-button {
   font-size: 120%;
   color: red;

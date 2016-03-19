@@ -67,7 +67,8 @@ CREATE TABLE poll_question_variant (
   last_modify_time TIMESTAMP NOT NULL,
   --general variant information
   name VARCHAR(150) NOT NULL,
-  var_value VARCHAR(150) NOT NULL, 
+  var_value VARCHAR(150) NOT NULL,
+  is_additional_input BOOLEAN NOT NULL DEFAULT FALSE,
   --question relative information
   question_id INTEGER REFERENCES poll_question(id) ON DELETE CASCADE NOT NULL,
   question_order INTEGER NOT NULL

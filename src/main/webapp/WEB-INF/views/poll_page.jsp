@@ -8,9 +8,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
-	<link rel="stylesheet"  type="text/css" href="/resources/css/poll-page.css">
+	<link rel="stylesheet"  type="text/css" href="/resources/css/poll-page-0.0.1.css">
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
-	<script type="text/javascript" src="/resources/js/poll-page.js"></script>
+	<script type="text/javascript" src="/resources/js/poll-page-0.0.1.js"></script>
 </head>
 <body>
 	<div id="banner-container">
@@ -50,6 +50,9 @@
 													<li><form:checkbox path="blocks[${block.id}].multyTypeAnswers['${question.id}']" value="${variant.varValue}"/>${variant.name}</li>
 												</c:otherwise>
 												</c:choose>
+												<c:if test="${variant.additionalInput}">
+													<form:textarea path="blocks[${block.id}].textTypeAnswers['${question.id}']" class="additional-input" />
+												</c:if>
 											</c:forEach>
 										</ul>
 									</c:when>

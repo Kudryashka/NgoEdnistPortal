@@ -54,13 +54,19 @@ public class PollAnswerForm {
 				Integer questionIdKey = question.getId();
 				switch(question.getAnswerType()) {
 				case text:
-					answerValue = answerFormBlock.textTypeAnswers.get(questionIdKey);
+					if (answerFormBlock.textTypeAnswers != null) {
+						answerValue = answerFormBlock.textTypeAnswers.get(questionIdKey);
+					}
 					break;
 				case single:
-					answerValue = answerFormBlock.singleTypeAnswers.get(questionIdKey);
+					if (answerFormBlock.singleTypeAnswers != null) {
+						answerValue = answerFormBlock.singleTypeAnswers.get(questionIdKey);
+					}
 					break;
 				case multy:
-					answerValue = answerFormBlock.multyTypeAnswers.get(questionIdKey);
+					if (answerFormBlock.multyTypeAnswers != null) {
+						answerValue = answerFormBlock.multyTypeAnswers.get(questionIdKey);
+					}
 					break;
 				}
 				// initialize answer object if answer value not null

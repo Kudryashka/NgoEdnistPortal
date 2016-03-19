@@ -32,6 +32,9 @@ public class PollQuestionVariant {
 	@Column(name = "var_value", nullable = false, length = 150)
 	private String varValue;
 	
+	@Column(name = "is_additional_input", nullable = false)
+	private boolean additionalInput;
+	
 	@ManyToOne
 	@JoinColumn(name = "question_id", nullable = false)
 	private PollQuestion parentQuestion;
@@ -77,6 +80,14 @@ public class PollQuestionVariant {
 
 	public void setVarValue(String varValue) {
 		this.varValue = varValue;
+	}
+
+	public boolean isAdditionalInput() {
+		return additionalInput;
+	}
+
+	public void setAdditionalInput(boolean additionalInput) {
+		this.additionalInput = additionalInput;
 	}
 
 	public PollQuestion getParentQuestion() {
