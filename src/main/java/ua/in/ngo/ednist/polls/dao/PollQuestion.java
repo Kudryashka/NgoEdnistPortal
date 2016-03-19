@@ -48,6 +48,9 @@ public class PollQuestion {
 	@Column(name = "answer_type", nullable = false)
 	private AnswerType answerType;
 	
+	@Column(name = "is_exists_additional_input", nullable = false)
+	private boolean existsAdditionalInput;
+	
 	@ManyToOne
 	@JoinColumn(name = "block_id", nullable = false)
 	private PollBlock parentBlock;
@@ -105,6 +108,14 @@ public class PollQuestion {
 
 	public void setAnswerType(AnswerType answerType) {
 		this.answerType = answerType;
+	}
+
+	public boolean isExistsAdditionalInput() {
+		return existsAdditionalInput;
+	}
+
+	public void setExistsAdditionalInput(boolean existsAdditionalInput) {
+		this.existsAdditionalInput = existsAdditionalInput;
 	}
 
 	public PollBlock getParentBlock() {

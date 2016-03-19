@@ -17,7 +17,7 @@
 		<img alt="alt" src="/resources/banner1.jpg" class="banner">
 		<img alt="alt" src="/resources/banner2.jpg" class="banner">
 		<img alt="alt" src="/resources/banner3.jpg" class="banner">
-		<img alt="alt" src="/resources/banner3.jpg" class="banner">
+		<img alt="alt" src="/resources/ngo-ednist-banner.jpg" class="banner">
 	</div>
 	<h1>${poll.name}</h1>
 	<c:if test="${not empty poll.description}">
@@ -30,14 +30,18 @@
 			<c:forEach var="block" items="${poll.pollBlocks}">
 				<div>
 					<h2>${block.name}</h2>
-					<p><em>${block.description}</em></p>
+					<c:if test="${not empty block.description}">
+						<p><em>${block.description}</em></p>
+					</c:if>
 					<c:choose>
 					<c:when test="${fn:length(block.blockQuestions) > 0}">
 						<ol>
 							<c:forEach var="question" items="${block.blockQuestions}">
 								<li>
 									<h3>${question.name}</h3>
-									<p><em>${question.description}</em></p>
+									<c:if test="${not empty question.description}">
+										<p><em>${question.description}</em></p>
+									</c:if>
 									<c:choose>
 									<c:when test="${fn:length(question.questionVariants) > 0}">
 										<ul class="selectable-list">
@@ -50,11 +54,14 @@
 													<li><form:checkbox path="blocks[${block.id}].multyTypeAnswers['${question.id}']" value="${variant.varValue}"/>${variant.name}</li>
 												</c:otherwise>
 												</c:choose>
-												<c:if test="${variant.additionalInput}">
-													<form:textarea path="blocks[${block.id}].textTypeAnswers['${question.id}']" class="additional-input" />
+												<c:if test="${not empty variant.onChooseRelativeInfo}">
+													<p>${variant.onChooseRelativeInfo}</p>
 												</c:if>
 											</c:forEach>
 										</ul>
+										<c:if test="${question.existsAdditionalInput}">
+											<form:textarea path="blocks[${block.id}].textTypeAnswers['${question.id}']" class="additional-input" />
+										</c:if>
 									</c:when>
 									<c:otherwise>
 										<form:textarea path="blocks[${block.id}].textTypeAnswers['${question.id}']" class="textarea-item" />

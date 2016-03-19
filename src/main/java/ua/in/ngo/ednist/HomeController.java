@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ua.in.ngo.ednist.polls.PollAnswerService;
 import ua.in.ngo.ednist.polls.PollNotFoundException;
 import ua.in.ngo.ednist.polls.PollService;
 import ua.in.ngo.ednist.polls.dao.Poll;
@@ -30,10 +31,16 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	private PollService pollService;
+	private PollAnswerService pollAnswerService;
 	
 	@Autowired
 	public void setPollService(PollService pollService) {
 		this.pollService = pollService;
+	}
+	
+	@Autowired
+	public void setPollAnswerService(PollAnswerService pollAnswerService) {
+		this.pollAnswerService = pollAnswerService;
 	}
 	
 	/**
@@ -107,7 +114,8 @@ public class HomeController {
 		}
 		
 		PollAnswer answer = pollAnswerForm.toPollAnswer(poll);
-		//todo save to persist
+		logger.info("answers size: " + answer.getPollQuestionAnswers().size());
+		pollAnswerService.addAnswer(answer);
 		
 		return "redirect:/polls";
 	}

@@ -3,6 +3,7 @@ package ua.in.ngo.ednist.polls.dao;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +34,7 @@ public class PollAnswer {
 	@JoinColumn(name = "poll_id", nullable = false)
 	private Poll poll;
 	
-	@OneToMany(mappedBy = "parentPollAnswer", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "parentPollAnswer", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	private Set<PollQuestionAnswer> pollQuestionAnswers;
 
 	public int getId() {

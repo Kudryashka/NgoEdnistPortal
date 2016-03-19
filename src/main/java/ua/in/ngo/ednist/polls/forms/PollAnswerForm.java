@@ -51,6 +51,7 @@ public class PollAnswerForm {
 			for (PollQuestion question : pollQuestions) {
 				// search for answer value for every question in every block
 				String answerValue = null;
+				String additionalInput = null;
 				Integer questionIdKey = question.getId();
 				switch(question.getAnswerType()) {
 				case text:
@@ -61,21 +62,27 @@ public class PollAnswerForm {
 				case single:
 					if (answerFormBlock.singleTypeAnswers != null) {
 						answerValue = answerFormBlock.singleTypeAnswers.get(questionIdKey);
+						additionalInput = answerFormBlock.textTypeAnswers == null ? null : answerFormBlock.textTypeAnswers.get(questionIdKey);
 					}
 					break;
 				case multy:
 					if (answerFormBlock.multyTypeAnswers != null) {
 						answerValue = answerFormBlock.multyTypeAnswers.get(questionIdKey);
+						additionalInput = answerFormBlock.textTypeAnswers == null ? null : answerFormBlock.textTypeAnswers.get(questionIdKey);
 					}
 					break;
 				}
 				// initialize answer object if answer value not null
-				PollQuestionAnswer pqa = new PollQuestionAnswer();
-				pqa.setAnswerValue(answerValue);
-				pqa.setInsertTime(time);
-				pqa.setLastModifyTime(time);
-				pqa.setParentPollAnswer(pollAnswer);
-				pqa.setRelativePollQuestion(question);
+				if (answerValue != null) {
+					PollQuestionAnswer pqa = new PollQuestionAnswer();
+					pqa.setAnswerValue(answerValue);
+					pqa.setAdditionalInput(additionalInput);
+					pqa.setInsertTime(time);
+					pqa.setLastModifyTime(time);
+					pqa.setParentPollAnswer(pollAnswer);
+					pqa.setRelativePollQuestion(question);
+					pollQuestionAnswers.add(pqa);
+				}
 			}
 		}
 		return pollAnswer;

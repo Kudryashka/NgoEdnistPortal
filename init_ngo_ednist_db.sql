@@ -54,6 +54,7 @@ CREATE TABLE poll_question (
   name VARCHAR(300),
   description TEXT,
   answer_type CHAR(6) CHECK (answer_type IN ('text', 'single', 'multy')) DEFAULT 'text',
+  is_exists_additional_input BOOLEAN NOT NULL DEFAULT FALSE,
   --block relative information
   block_id INTEGER REFERENCES poll_block(id) ON DELETE CASCADE NOT NULL,
   block_order INTEGER NOT NULL
@@ -68,7 +69,7 @@ CREATE TABLE poll_question_variant (
   --general variant information
   name VARCHAR(150) NOT NULL,
   var_value VARCHAR(150) NOT NULL,
-  is_additional_input BOOLEAN NOT NULL DEFAULT FALSE,
+  on_choose_relative_info TEXT,
   --question relative information
   question_id INTEGER REFERENCES poll_question(id) ON DELETE CASCADE NOT NULL,
   question_order INTEGER NOT NULL
@@ -93,5 +94,6 @@ CREATE TABLE poll_question_answer (
   --answer information
   poll_answer_id INTEGER REFERENCES poll_answer(id) ON DELETE CASCADE NOT NULL,
   question_id INTEGER REFERENCES poll_question(id) ON DELETE CASCADE NOT NULL,
-  answer_value TEXT
+  answer_value TEXT,
+  additional_input_value TEXT
 );

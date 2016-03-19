@@ -37,6 +37,9 @@ public class PollQuestionAnswer {
 	
 	@Column(name = "answer_value", columnDefinition = "TEXT")
 	private String answerValue;
+	
+	@Column(name = "additional_input_value", columnDefinition = "TEXT")
+	private String additionalInput;
 
 	public int getId() {
 		return id;
@@ -84,5 +87,13 @@ public class PollQuestionAnswer {
 
 	public void setAnswerValue(String answerValue) {
 		this.answerValue = answerValue;
+	}
+
+	public String getAdditionalInput() {
+		return additionalInput;
+	}
+
+	public void setAdditionalInput(String additionalInput) {
+		this.additionalInput = additionalInput;
 	}
 }

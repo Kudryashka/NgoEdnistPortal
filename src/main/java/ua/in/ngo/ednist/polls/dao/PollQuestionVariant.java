@@ -32,8 +32,8 @@ public class PollQuestionVariant {
 	@Column(name = "var_value", nullable = false, length = 150)
 	private String varValue;
 	
-	@Column(name = "is_additional_input", nullable = false)
-	private boolean additionalInput;
+	@Column(name = "on_choose_relative_info", columnDefinition = "TEXT")
+	private String onChooseRelativeInfo;
 	
 	@ManyToOne
 	@JoinColumn(name = "question_id", nullable = false)
@@ -82,12 +82,12 @@ public class PollQuestionVariant {
 		this.varValue = varValue;
 	}
 
-	public boolean isAdditionalInput() {
-		return additionalInput;
+	public String getOnChooseRelativeInfo() {
+		return onChooseRelativeInfo;
 	}
 
-	public void setAdditionalInput(boolean additionalInput) {
-		this.additionalInput = additionalInput;
+	public void setOnChooseRelativeInfo(String onChooseRelativeInfo) {
+		this.onChooseRelativeInfo = onChooseRelativeInfo;
 	}
 
 	public PollQuestion getParentQuestion() {
