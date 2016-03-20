@@ -48,15 +48,22 @@
 											<c:forEach var="variant" items="${question.questionVariants}">
 												<c:choose>
 												<c:when test="${question.answerType == 'single'}">
-													<li><form:radiobutton path="blocks[${block.id}].singleTypeAnswers['${question.id}']" value="${variant.varValue}"/>${variant.name}</li>
+													<li>
+														<form:radiobutton path="blocks[${block.id}].singleTypeAnswers['${question.id}']" value="${variant.varValue}"/>${variant.name}
+														<c:if test="${not empty variant.onChooseRelativeInfo}">
+															<div class="on-choose-relative-info">${variant.onChooseRelativeInfo}</div>
+														</c:if>
+													</li>
 												</c:when>
 												<c:otherwise>
-													<li><form:checkbox path="blocks[${block.id}].multyTypeAnswers['${question.id}']" value="${variant.varValue}"/>${variant.name}</li>
+													<li>
+														<form:checkbox path="blocks[${block.id}].multyTypeAnswers['${question.id}']" value="${variant.varValue}"/>${variant.name}
+														<c:if test="${not empty variant.onChooseRelativeInfo}">
+															<div class="on-choose-relative-info">${variant.onChooseRelativeInfo}</div>
+														</c:if>
+													</li>
 												</c:otherwise>
 												</c:choose>
-												<c:if test="${not empty variant.onChooseRelativeInfo}">
-													<p>${variant.onChooseRelativeInfo}</p>
-												</c:if>
 											</c:forEach>
 										</ul>
 										<c:if test="${question.existsAdditionalInput}">
@@ -78,7 +85,7 @@
 				</div>
 				<hr>
 			</c:forEach>
-			<input type="submit" value="Send" class="submit-button no-print">
+			<input type="submit" value="Відправити" class="submit-button no-print">
 		</c:when>
 		<c:otherwise>
 			<p>No questions</p>

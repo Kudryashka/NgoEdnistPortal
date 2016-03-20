@@ -20,6 +20,38 @@ function resizeBanners() {
 }
 
 $(document).ready(function() {
+	/* resize banners to fill banner container */
 	resizeBanners();
 	$(window).resize(resizeBanners);
+	
+	/* program answer variants with relational info to hide/show relation info block */
+	$(".on-choose-relative-info").each(function() {
+		/* Assume that relative info provided for radio and checkboxes only */
+		var relativeInfo = $(this);
+		var prev = $(this).prev();
+		if (prev.is(":radio")) {
+			var radioName = prev.attr('name');
+			//check type of quotes in name and construct request
+			var radiosSearchRequest = radioName.indexOf("'") == -1 ? "input[name='" + radioName + "']" : 'input[name="' + radioName + '"]';
+			$(radiosSearchRequest).each(function() {
+				$(this).on('change', function() {
+					if (prev.is(":checked")) {
+						relativeInfo.slideDown();
+					} else {
+						relativeInfo.slideUp();
+					}
+				});
+			});
+			
+		} else {
+			prev.on('change', function() {
+				if (prev.is(":checked")) {
+					relativeInfo.slideDown();
+				} else {
+					relativeInfo.slideUp();
+				}
+			});
+		}
+		if (!prev.is(":checked")) relativeInfo.hide();
+	});
 });

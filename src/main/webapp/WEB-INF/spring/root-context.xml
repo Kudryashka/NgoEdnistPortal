@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+	<sec:http auto-config="true"
+		authentication-manager-ref="authenticationManager">
+		<sec:intercept-url pattern="/" access="permitAll" />
+		<sec:intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
+		<sec:form-login authentication-failure-url="/Access_Denied"/>
+	</sec:http>
+		
+	<!-- Should be changed before production -->
+	<sec:authentication-manager id="authenticationManager">
+		<sec:authentication-provider>
+			<sec:user-service>
+				<sec:user name="admin" password="admin" authorities="ROLE_ADMIN"/>
+			</sec:user-service>
+		</sec:authentication-provider>
+	</sec:authentication-manager>
 		
 </beans>
