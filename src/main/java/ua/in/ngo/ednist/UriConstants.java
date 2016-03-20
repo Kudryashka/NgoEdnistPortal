@@ -53,4 +53,14 @@ public interface UriConstants {
 	 * </ol>
 	 */
 	String POLL_ANSWERS = "/polls/{id}/answers";
+	
+	/**
+	 * <b>Thanks page for poll answer</b>
+	 * <hr>
+	 * Actions:
+	 * <ol>
+	 * <li>GET - get thanks page</li>
+	 * </ol>
+	 */
+	String POLL_THANKS = "/polls/{alias}/thanks";
 }

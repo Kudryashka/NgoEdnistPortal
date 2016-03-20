@@ -123,7 +123,21 @@ public class HomeController {
 		logger.info("answers size: " + answer.getPollQuestionAnswers().size());
 		pollAnswerService.addAnswer(answer);
 		
-		return "redirect:/polls";
+		return "redirect:/polls/"+pollId+"/thanks";
+	}
+	
+	@RequestMapping(value = POLL_THANKS, method = RequestMethod.GET)
+	public String pollSubmitThanks(@PathVariable("alias") String alias, 
+			Model model) throws Exception {
+		logger.info("Thanks page requested for poll with alias: " + alias);
+		
+		Poll poll = pollService.getPollByAlias(alias);
+		if (poll == null) {
+			throw new PollNotFoundException(alias);
+		}
+		model.addAttribute("poll", poll);
+		
+		return "poll_thanks";
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

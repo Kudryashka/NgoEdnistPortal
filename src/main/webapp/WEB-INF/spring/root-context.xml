@@ -9,11 +9,11 @@
 		
 	<sec:http auto-config="true"
 		authentication-manager-ref="authenticationManager">
-		<sec:intercept-url pattern="/polls/*" access="permitAll" />
-		<sec:intercept-url pattern="/" access="hasRole('ADMIN')" />
-		<sec:intercept-url pattern="/polls" access="hasRole('ADMIN')" />
+		<sec:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
 		<sec:intercept-url pattern="/projects**" access="hasRole('ADMIN')" />
-		<sec:intercept-url pattern="/admin**" access="hasRole('ADMIN')" />
+		<sec:intercept-url pattern="/polls/*" access="permitAll" />
+		<sec:intercept-url pattern="/polls" access="hasRole('ADMIN')" />
+		<sec:intercept-url pattern="/" access="hasRole('ADMIN')" />
 		<sec:form-login authentication-failure-url="/Access_Denied" />
 	</sec:http>
 		
