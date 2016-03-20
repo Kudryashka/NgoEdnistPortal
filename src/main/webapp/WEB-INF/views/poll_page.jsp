@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Insert title here</title>
+	<title>${initParam['ngoName']} - ${poll.name}</title>
 	<link rel="stylesheet"  type="text/css" href="/resources/css/poll-page-0.0.1.css">
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
 	<script type="text/javascript" src="/resources/js/poll-page-0.0.1.js"></script>
