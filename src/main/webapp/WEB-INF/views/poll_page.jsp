@@ -37,8 +37,8 @@
 					<c:when test="${fn:length(block.blockQuestions) > 0}">
 						<ol>
 							<c:forEach var="question" items="${block.blockQuestions}">
-								<li>
-									<h3>${question.name}</h3>
+								<li <c:if test="${question.answerRequired}">class="required"</c:if>>
+									<h3>${question.name}<c:if test="${question.answerRequired}"><span class="marker-required"> *</span></c:if></h3>
 									<c:if test="${not empty question.description}">
 										<p><em>${question.description}</em></p>
 									</c:if>

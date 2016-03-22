@@ -54,4 +54,17 @@ $(document).ready(function() {
 		}
 		if (!prev.is(":checked")) relativeInfo.hide();
 	});
+	
+	/* validation for required answers */
+	$('.submit-button').click(function() {
+		var correct = true;
+		$('.required textarea').each(function() {
+			if (!$(this).val().trim()) {
+				var questionName = $(this).prev('h3').text().split(':')[0];
+				alert('Запитання "' + questionName + '" обов’язкове для заповнення');
+				correct = false;
+			}
+		});
+		return correct;
+	});
 });

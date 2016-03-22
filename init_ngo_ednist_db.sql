@@ -55,6 +55,7 @@ CREATE TABLE poll_question (
   description TEXT,
   answer_type CHAR(6) CHECK (answer_type IN ('text', 'single', 'multy')) DEFAULT 'text',
   is_exists_additional_input BOOLEAN NOT NULL DEFAULT FALSE,
+  is_answer_required BOOLEAN NOT NULL DEFAULT FALSE,
   --block relative information
   block_id INTEGER REFERENCES poll_block(id) ON DELETE CASCADE NOT NULL,
   block_order INTEGER NOT NULL
