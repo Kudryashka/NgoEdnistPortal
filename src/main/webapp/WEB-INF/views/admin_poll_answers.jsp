@@ -12,21 +12,23 @@
 	<h1>Poll answers</h1>
 	<p>Answers total count: ${fn:length(answers)}</p>
 	<table border="1">
-		<caption>Answers table</caption>
+		<caption>Answer table</caption>
 		<tr>
-			<th>Questions</th>
-			<c:forEach var="answer" items="${answers}">
-				<th>Answer id: ${answer.id}</th>
+			<c:forEach var="block" items="${poll.pollBlocks}">
+				<td colspan="${fn:length(block.blockQuestions)}">Block: ${block.name}</td>
 			</c:forEach>
 		</tr>
-		<c:forEach var="block" items="${poll.pollBlocks}">
-			<tr>
-				<td colspan="${fn:length(answers) + 1}">Block: ${block.name}</td>
-			</tr>
-			<c:forEach var="question" items="${block.blockQuestions}">
-				<tr>
+		<tr>
+			<c:forEach var="block" items="${poll.pollBlocks}">
+				<c:forEach var="question" items="${block.blockQuestions}">
 					<td>${question.name}</td>
-					<c:forEach var="answer" items="${answers}">
+				</c:forEach>
+			</c:forEach>
+		</tr>
+		<c:forEach var="answer" items="${answers}">
+			<tr>
+				<c:forEach var="block" items="${poll.pollBlocks}">
+					<c:forEach var="question" items="${block.blockQuestions}">
 						<td>
 							<c:forEach var="questionAnswer" items="${answer.pollQuestionAnswers}">
 								<c:if test="${questionAnswer.relativePollQuestion.id == question.id}">
@@ -39,8 +41,8 @@
 							</c:forEach>
 						</td>
 					</c:forEach>
-				</tr>
-			</c:forEach>
+				</c:forEach>
+			</tr>
 		</c:forEach>
 	</table>
 </body>
