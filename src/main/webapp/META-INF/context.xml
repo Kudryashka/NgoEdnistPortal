@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Context>
-	<!-- Change to real attributes before deploy -->
-	<Resource name="jdbc/postgres" auth="Container"
-          type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
-          url="jdbc:postgresql://localhost:5432/ngo_ednist_db"
-          username="postgres" password="" maxTotal="20" maxIdle="10"
-		  maxWaitMillis="-1"/>
-</Context>
