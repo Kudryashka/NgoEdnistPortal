@@ -2,6 +2,8 @@ package ua.in.ngo.ednist.polls.dao;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -17,6 +19,7 @@ public class PollDAOImpl {
 	
 	private SessionFactory sessionFactory;
 	
+	@Resource
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}

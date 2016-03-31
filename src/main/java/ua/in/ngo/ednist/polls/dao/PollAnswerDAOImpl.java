@@ -2,6 +2,8 @@ package ua.in.ngo.ednist.polls.dao;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ public class PollAnswerDAOImpl implements PollAnswerDAO {
 	
 	private SessionFactory sessionFactory;
 	
+	@Resource
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}

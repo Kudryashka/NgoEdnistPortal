@@ -26,54 +26,9 @@
 	
 	<context:component-scan base-package="ua.in.ngo.ednist" />
 	
-	<beans:bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<beans:property name="jndiName" value="java:comp/env/jdbc/ngo_ednist_db" />
-	</beans:bean>
-	
-	<!-- Hibernate SessionFactory definition -->
-	<beans:bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<beans:property name="dataSource" ref="dataSource"></beans:property>
-		<beans:property name="annotatedClasses">
-			<beans:list>
-				<beans:value>ua.in.ngo.ednist.polls.dao.Poll</beans:value>
-				<beans:value>ua.in.ngo.ednist.polls.dao.PollBlock</beans:value>
-				<beans:value>ua.in.ngo.ednist.polls.dao.PollQuestion</beans:value>
-				<beans:value>ua.in.ngo.ednist.polls.dao.PollQuestionVariant</beans:value>
-				<beans:value>ua.in.ngo.ednist.polls.dao.PollAnswer</beans:value>
-				<beans:value>ua.in.ngo.ednist.polls.dao.PollQuestionAnswer</beans:value>
-			</beans:list>
-		</beans:property>
-		<beans:property name="hibernateProperties">
-			<beans:props>
-				<beans:prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</beans:prop>
-				<!-- Only for development time. -->
-				<beans:prop key="hibernate.show_sql">false</beans:prop>
-				<beans:prop key="hibernate.connection.characterEncoding">UTF-8</beans:prop>
-				<beans:prop key="hibernate.connection.useUnicode">true</beans:prop>
-			</beans:props>
-		</beans:property>
-	</beans:bean>
-	
-	<beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<beans:property name="sessionFactory" ref="hibernateSessionFactory"></beans:property>
-	</beans:bean>
+	<!-- Java config bean -->
+	<beans:bean class="ua.in.ngo.ednist.conf.AppConfig"></beans:bean>
 	
 	<tx:annotation-driven transaction-manager="transactionManager"/>
-	
-	<beans:bean id="pollDAO" class="ua.in.ngo.ednist.polls.dao.PollDAOImpl">
-		<beans:property name="sessionFactory" ref="hibernateSessionFactory"></beans:property>
-	</beans:bean>
-	
-	<beans:bean id="pollService" class="ua.in.ngo.ednist.polls.PollService">
-		<beans:property name="pollDAO" ref="pollDAO"></beans:property>
-	</beans:bean>
-	
-	<beans:bean id="pollAnswerDAO" class="ua.in.ngo.ednist.polls.dao.PollAnswerDAOImpl">
-		<beans:property name="sessionFactory" ref="hibernateSessionFactory"></beans:property>
-	</beans:bean>
-	
-	<beans:bean id="pollAnswerService" class="ua.in.ngo.ednist.polls.PollAnswerService">
-		<beans:property name="pollAnswerDAO" ref="pollAnswerDAO"></beans:property>
-	</beans:bean>
 	
 </beans:beans>
