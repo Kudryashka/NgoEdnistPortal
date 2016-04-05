@@ -7,25 +7,6 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
-	<sec:http auto-config="true"
-		authentication-manager-ref="authenticationManager">
-		<sec:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
-		<sec:intercept-url pattern="/projects**" access="hasRole('ADMIN')" />
-		<sec:intercept-url pattern="/polls/*" access="permitAll" />
-		<sec:intercept-url pattern="/polls" access="hasRole('ADMIN')" />
-		<sec:intercept-url pattern="/" access="hasRole('ADMIN')" />
-		<sec:form-login authentication-failure-url="/Access_Denied" />
-		<!-- Temporary -->
-		<sec:csrf disabled="true"/>
-	</sec:http>
-		
-	<!-- Should be changed before production -->
-	<sec:authentication-manager id="authenticationManager">
-		<sec:authentication-provider>
-			<sec:user-service>
-				<sec:user name="admin" password="admin" authorities="ROLE_ADMIN"/>
-			</sec:user-service>
-		</sec:authentication-provider>
-	</sec:authentication-manager>
+	<import resource="security-context.xml"/>
 		
 </beans>
