@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${initParam['ngoName']}</title>
+<title>Громадська Організація "Єдність"</title>
 </head>
 <body style="">
 <div style="background-color:#82c38d; padding: 2em;">
