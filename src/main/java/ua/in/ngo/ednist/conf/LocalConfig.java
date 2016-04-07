@@ -8,12 +8,33 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
-public class AppConfig {
+@ComponentScan("ua.in.ngo.ednist")
+@EnableWebMvc
+@EnableTransactionManagement
+public class LocalConfig extends WebMvcConfigurerAdapter {
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(31556926);
+	}
+	
+	@Override
+	public void configureViewResolvers(ViewResolverRegistry registry) {
+		registry.jsp("/WEB-INF/views/", ".jsp").viewClass(JstlView.class);
+	}
 
 	@Bean(destroyMethod="")
 	public DataSource dataSource() throws Exception {
@@ -35,7 +56,7 @@ public class AppConfig {
 	}
 	
 	@Bean
-	public HibernateTransactionManager transactionManager() throws Exception {
+	public PlatformTransactionManager transactionManager() throws Exception {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory((SessionFactory) hibernateSessionFactory().getObject());
 		return transactionManager;
