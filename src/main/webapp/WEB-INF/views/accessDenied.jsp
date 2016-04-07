@@ -7,6 +7,7 @@
 <title>Access Denied</title>
 </head>
 <body>
-
+	<h1>Access Denied</h1>
+	<p>Sorry, but you have no permissions to this resource.
 </body>
 </html>

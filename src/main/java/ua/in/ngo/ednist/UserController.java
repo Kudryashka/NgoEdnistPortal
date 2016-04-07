@@ -25,15 +25,13 @@ import ua.in.ngo.ednist.polls.dao.Poll;
 import ua.in.ngo.ednist.polls.dao.PollAnswer;
 import ua.in.ngo.ednist.polls.forms.PollAnswerForm;
 
-import static ua.in.ngo.ednist.UriConstants.*;
-
 /**
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class UserController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	private PollService pollService;
 	
@@ -45,48 +43,48 @@ public class HomeController {
 	/**
 	 * Selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = HOME, method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Http. Welcome home! The client locale is {}.", locale);
 		
-		model.addAttribute("projectsUri", ALL_PROJECTS);
-		model.addAttribute("pollsUri", ALL_POLLS);
+		model.addAttribute("projectsUri", "/projects");
+		model.addAttribute("pollsUri", "/polls");
 		
 		return "home";
 	}
 	
-	@RequestMapping(value = ALL_PROJECTS, method = RequestMethod.GET)
+	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String projects(Locale locale, Model model) {
 		logger.info("Http. All projects requested.");
 		
-		model.addAttribute("homeUri", HOME);
+		model.addAttribute("homeUri", "/");
 		
 		return "projects";
 	}
 	
-	@RequestMapping(value = PROJECT, method = RequestMethod.GET)
+	@RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
 	public String project(@PathVariable("id") String projectId, Locale locale, Model model) {
 		logger.info("Http. A project requested. Id: " + projectId);
 		
-		model.addAttribute("projectsUri", ALL_PROJECTS);
+		model.addAttribute("projectsUri", "/projects");
 		model.addAttribute("projectId", projectId);
 		
 		return "project";
 	}
 	
-	@RequestMapping(value = ALL_POLLS, method = RequestMethod.GET)
+	@RequestMapping(value = "/polls", method = RequestMethod.GET)
 	public String polls(Locale locale, Model model) {
 		logger.info("Http. All polls requested.");
 		
 		List<Poll> polls = pollService.listPolls();
 		
-		model.addAttribute("homeUri", HOME);
+		model.addAttribute("homeUri", "/");
 		model.addAttribute("polls", polls);
 		
 		return "polls";
 	}
 	
-	@RequestMapping(value = POLL, method = RequestMethod.GET)
+	@RequestMapping(value = "/polls/{id}", method = RequestMethod.GET)
 	public String poll(@PathVariable("id") String pollId, Locale locale, 
 			Model model) throws Exception {
 		logger.info("Http. A poll requested. Id: " + pollId);
@@ -101,7 +99,7 @@ public class HomeController {
 		return "poll_page";
 	}
 	
-	@RequestMapping(value = POLL, method = RequestMethod.POST)
+	@RequestMapping(value = "/polls/{id}", method = RequestMethod.POST)
 	public String poll(@PathVariable("id") String pollId,
 			@ModelAttribute PollAnswerForm pollAnswerForm, 
 			Locale locale, Model model) throws Exception {
@@ -119,7 +117,7 @@ public class HomeController {
 		return "redirect:/polls/"+pollId+"/thanks";
 	}
 	
-	@RequestMapping(value = POLL_THANKS, method = RequestMethod.GET)
+	@RequestMapping(value = "/polls/{alias}/thanks", method = RequestMethod.GET)
 	public String pollSubmitThanks(@PathVariable("alias") String alias, 
 			Model model) throws Exception {
 		logger.info("Thanks page requested for poll with alias: " + alias);

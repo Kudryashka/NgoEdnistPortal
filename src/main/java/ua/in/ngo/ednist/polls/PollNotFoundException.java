@@ -8,7 +8,7 @@ public class PollNotFoundException extends Exception {
 
 	private static final long serialVersionUID = 4319145793457856899L;
 	
-	public PollNotFoundException(String id) {
-		super(String.format("Poll with id=%s not found.", id));
+	public PollNotFoundException(String alias) {
+		super(String.format("Poll with alias=%s not found.", alias));
 	}
 }

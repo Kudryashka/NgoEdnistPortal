@@ -50,4 +50,9 @@ public class PollService {
 	public List<PollAnswer> getPollAnswers(Poll poll) {
 		return pollAnswerDAO.getPollAnswers(poll);
 	}
+	
+	@Transactional
+	public int getAnswersCount(Poll poll) {
+		return getPollAnswers(poll).size();
+	}
 }

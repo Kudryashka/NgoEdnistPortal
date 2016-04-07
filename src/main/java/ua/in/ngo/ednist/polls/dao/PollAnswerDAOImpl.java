@@ -37,4 +37,9 @@ public class PollAnswerDAOImpl implements PollAnswerDAO {
 		logger.info("Answer list requested. Poll " + poll.getName());
 		return answers;
 	}
+
+	@Override
+	public int getPollAnswersCount(Poll poll) {
+		return getPollAnswers(poll).size();
+	}
 }

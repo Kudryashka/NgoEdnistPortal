@@ -7,4 +7,6 @@ public interface PollAnswerDAO {
 	void addAnswer(PollAnswer answer);
 	
 	List<PollAnswer> getPollAnswers(Poll poll);
+	
+	int getPollAnswersCount(Poll poll);
 }

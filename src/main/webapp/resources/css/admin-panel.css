@@ -1,0 +1,65 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: arial, sans-serif;
+}
+
+.navigation-panel {
+	padding: 1em;
+	font-size: 120%;
+	float: left;
+	border-width: 0 3px 0 0;
+	border-style: solid;
+	heigth: 100%;
+}
+
+.navigation-item {
+	margin: 0.5em 0;
+}
+
+.navigation-item a {
+	display: block;
+	padding: 0.3em 0.1em;
+}
+
+.control-panel {
+	position: fixed;
+	right: 0;
+	top: 0;	
+	padding: 0.5em;
+}
+
+.page-content {
+	overflow: auto;
+	padding: 1em;
+}
+
+h1 {
+	text-align: center;
+	text-transform: uppercase;
+}
+
+h2 a {
+	color: black;
+}
+
+.content-list-item {
+	border-width: 1px 0;
+	border-style: solid;
+	padding: 0.5em;
+}
+
+.control-link-container {
+	text-align: right;
+	padding: 0.2em;
+}
+
+.control-link {
+	color: red;
+	padding: 0.1em 0.2em;
+	font-size: 90%;
+}
+
+.meta-info {
+	font-size: 85%;
+}
