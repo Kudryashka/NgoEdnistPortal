@@ -48,7 +48,7 @@ public class LocalConfig extends WebMvcConfigurerAdapter {
 	public LocalSessionFactoryBean hibernateSessionFactory() throws Exception {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan("ua.in.ngo.ednist.polls.dao", "ua.in.ngo.ednist.projects.dao");
+		sessionFactory.setPackagesToScan("ua.in.ngo.ednist.polls.dao", "ua.in.ngo.ednist.projects.dao", "ua.in.ngo.ednist.self.dao");
 		Properties hibernateProperties = new Properties();
 		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		hibernateProperties.setProperty("hibernate.connection.characterEncoding", "UTF-8");

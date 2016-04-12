@@ -22,8 +22,7 @@ public class GlobalConfig {
 	@Bean
 	public FileUploadService fileUploadService() {
 		return new FileUploadService("/srv/static", "ua.in.ngo.ednist", 
-						new FileUploadGroup("project", "project", 
-								FileUploadResolveStrategy.REPLACE,
-									".png"));
+						new FileUploadGroup("project", "project", FileUploadResolveStrategy.REPLACE, ".png"), 
+						new FileUploadGroup("self", "self", FileUploadResolveStrategy.REPLACE, ".png"));
 	}
 }

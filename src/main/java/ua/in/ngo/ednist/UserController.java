@@ -1,5 +1,6 @@
 package ua.in.ngo.ednist;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,6 +25,8 @@ import ua.in.ngo.ednist.polls.PollService;
 import ua.in.ngo.ednist.polls.dao.Poll;
 import ua.in.ngo.ednist.polls.dao.PollAnswer;
 import ua.in.ngo.ednist.polls.forms.PollAnswerForm;
+import ua.in.ngo.ednist.self.SelfService;
+import ua.in.ngo.ednist.util.Link;
 
 /**
  * Handles requests for the application home page.
@@ -33,8 +36,22 @@ public class UserController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
+	private static List<Link> navigationMenu = new ArrayList<>();
+	static {
+		navigationMenu.add(new Link("/", "Home"));
+		navigationMenu.add(new Link("/projects", "Projects"));
+		navigationMenu.add(new Link("/polls", "Polls"));
+		navigationMenu.add(new Link("/about-us", "About us"));
+	}
+	
+	private SelfService selfService;
 	private PollService pollService;
 	
+	@Resource
+	public void setSelfService(SelfService selfService) {
+		this.selfService = selfService;
+	}
+
 	@Resource
 	public void setPollService(PollService pollService) {
 		this.pollService = pollService;
@@ -46,19 +63,29 @@ public class UserController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Http. Welcome home! The client locale is {}.", locale);
+
+		model.addAttribute("title", "Home page");
+		model.addAttribute("navigationMenu", navigationMenu);
+		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
 		
-		model.addAttribute("projectsUri", "/projects");
-		model.addAttribute("pollsUri", "/polls");
-		
-		return "home";
+		return "user_home";
+	}
+	
+	@RequestMapping(value = "/about-us", method = RequestMethod.GET)
+	public String aboutUs(Model model) {
+		logger.info("About-Us view requested.");
+		model.addAttribute("title", "About us");
+		model.addAttribute("navigationMenu", navigationMenu);
+		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
+		return "user_about_us";
 	}
 	
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String projects(Locale locale, Model model) {
 		logger.info("Http. All projects requested.");
-		
-		model.addAttribute("homeUri", "/");
-		
+		model.addAttribute("title", "Projects list");
+		model.addAttribute("navigationMenu", navigationMenu);
+		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
 		return "projects";
 	}
 	
@@ -78,7 +105,9 @@ public class UserController {
 		
 		List<Poll> polls = pollService.listPolls();
 		
-		model.addAttribute("homeUri", "/");
+		model.addAttribute("title", "Polls list");
+		model.addAttribute("navigationMenu", navigationMenu);
+		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
 		model.addAttribute("polls", polls);
 		
 		return "polls";

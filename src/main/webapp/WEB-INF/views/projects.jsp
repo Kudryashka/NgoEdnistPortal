@@ -1,14 +1,27 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" session="false"%>
+    pageEncoding="UTF-8" session="false" trimDirectiveWhitespaces="true"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>${title }</title>
+<link rel="stylesheet" type="text/css" href="/resources/css/page.css">
 </head>
 <body>
-	<a href="${homeUri}">Go back</a>
-	<h1>Projects list</h1>
+	<div class="header">
+		<img alt="${selfInfo.shortName }" src="${selfInfo.logoPath }" class="logo"><!-- 
+	  	--><div><!--
+	  		--><div class="organization-label-container">${selfInfo.name }</div><!--  
+	  		--><ul class="hor-menu-list"><!-- 
+				--><c:forEach var="menuItem" items="${navigationMenu }"><!--
+				--><li><a href="${menuItem.uri }">${menuItem.name }</a></li><!-- 
+				--></c:forEach>
+			</ul>
+		</div>
+	</div>
+	<div>
+		<h1>Projects</h1>
+	</div>
 </body>
 </html>

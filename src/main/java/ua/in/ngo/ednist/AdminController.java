@@ -1,11 +1,7 @@
 package ua.in.ngo.ednist;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,13 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import ua.in.ngo.ednist.polls.PollNotFoundException;
 import ua.in.ngo.ednist.polls.PollService;
@@ -29,8 +22,9 @@ import ua.in.ngo.ednist.polls.dao.PollAnswer;
 import ua.in.ngo.ednist.projects.Project;
 import ua.in.ngo.ednist.projects.ProjectNotFoundException;
 import ua.in.ngo.ednist.projects.ProjectService;
-import ua.in.ngo.ednist.projects.dao.ProjectImpl;
 import ua.in.ngo.ednist.projects.form.FormProject;
+import ua.in.ngo.ednist.self.SelfService;
+import ua.in.ngo.ednist.self.form.SelfInfoForm;
 import ua.in.ngo.ednist.upload.FileUploadService;
 import ua.in.ngo.ednist.util.Link;
 
@@ -44,14 +38,21 @@ public class AdminController {
 	private static List<Link> adminNavigationMenu = new ArrayList<>(); //<path, name>
 	static {
 		adminNavigationMenu.add(new Link("/admin", "Help"));
+		adminNavigationMenu.add(new Link("/admin/self", "Self Info"));
 		adminNavigationMenu.add(new Link("/admin/polls", "Polls"));
 		adminNavigationMenu.add(new Link("/admin/projects", "Projects"));
 		adminNavigationMenu.add(new Link("/", "Exit panel"));
 	}
 	
+	private SelfService selfService;
 	private PollService pollService;
 	private ProjectService projectService;
 	private FileUploadService fileUploadService;
+	
+	@Resource
+	public void setSelfService(SelfService selfService) {
+		this.selfService = selfService;
+	}
 	
 	@Resource
 	public void setPollService(PollService pollService) {
@@ -83,6 +84,53 @@ public class AdminController {
 		model.addAttribute("pageName", "help");
 		
 		return "admin_home";
+	}
+	
+	/*
+	 * SELF MAPPING
+	 * 
+	 * /admin/self 		:: admin_self_info
+	 * /admin/self/edit :: admin_self_editor
+	 */
+	
+	@RequestMapping(value = "/self", method = RequestMethod.GET)
+	public String selfInfo(Model model) {
+		logger.info("Self info called.");
+		
+		List<Link> controls = new ArrayList<>();
+		controls.add(new Link("/admin/self/edit", "Edit"));
+		controls.add(logoutLink);
+		
+		model.addAttribute("title", "Self info page");
+		model.addAttribute("navigationMenu", adminNavigationMenu);
+		model.addAttribute("controls", controls);
+		model.addAttribute("pageName", "Self info");
+		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
+		
+		return "admin_self_info";
+	}
+	
+	@RequestMapping(value = "/self/edit", method = RequestMethod.GET)
+	public String selfInfoEdit(Model model) {
+		logger.info("Self info modification called.");
+		
+		List<Link> controls = new ArrayList<>();
+		controls.add(new Link("/admin/self", "Cancel"));
+		controls.add(logoutLink);
+		
+		model.addAttribute("title", "Self info edit page");
+		model.addAttribute("controls", controls);
+		model.addAttribute("pageName", "Self info editor");
+		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
+		
+		return "admin_self_editor";
+	}
+	
+	@RequestMapping(value = "/self/edit", method = RequestMethod.POST)
+	public String selfInfoSubmitEdit(@ModelAttribute("selfInfo") SelfInfoForm selfInfo, Model model) {
+		logger.info("Self info update submitted.");
+		selfService.updateSelfInfo(selfInfo);
+		return "redirect:/admin/self";
 	}
 	
 	/*

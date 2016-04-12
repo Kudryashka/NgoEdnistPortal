@@ -11,3 +11,6 @@ DROP TABLE poll;
 
 --Project relative tables
 DROP TABLE project;
+
+--Self info
+DROP TABLE self_info;
