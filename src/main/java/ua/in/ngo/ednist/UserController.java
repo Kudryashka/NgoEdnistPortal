@@ -68,7 +68,7 @@ public class UserController {
 		model.addAttribute("navigationMenu", navigationMenu);
 		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
 		
-		return "user_home";
+		return "home";
 	}
 	
 	@RequestMapping(value = "/about-us", method = RequestMethod.GET)
@@ -77,7 +77,7 @@ public class UserController {
 		model.addAttribute("title", "About us");
 		model.addAttribute("navigationMenu", navigationMenu);
 		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
-		return "user_about_us";
+		return "about_us";
 	}
 	
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
@@ -86,7 +86,7 @@ public class UserController {
 		model.addAttribute("title", "Projects list");
 		model.addAttribute("navigationMenu", navigationMenu);
 		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
-		return "projects";
+		return "projects_list";
 	}
 	
 	@RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
@@ -96,7 +96,7 @@ public class UserController {
 		model.addAttribute("projectsUri", "/projects");
 		model.addAttribute("projectId", projectId);
 		
-		return "project";
+		return "project_detail";
 	}
 	
 	@RequestMapping(value = "/polls", method = RequestMethod.GET)
@@ -110,7 +110,7 @@ public class UserController {
 		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
 		model.addAttribute("polls", polls);
 		
-		return "polls";
+		return "polls_list";
 	}
 	
 	@RequestMapping(value = "/polls/{id}", method = RequestMethod.GET)
@@ -125,7 +125,7 @@ public class UserController {
 		
 		model.addAttribute("poll", poll);
 		model.addAttribute("pollAnswerForm", new PollAnswerForm());
-		return "poll_page";
+		return "polls_exemine";
 	}
 	
 	@RequestMapping(value = "/polls/{id}", method = RequestMethod.POST)
@@ -157,7 +157,7 @@ public class UserController {
 		}
 		model.addAttribute("poll", poll);
 		
-		return "poll_thanks";
+		return "polls_exemine_thanks";
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -171,6 +171,6 @@ public class UserController {
 	
 	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
 	public String accessDenied() {
-		return "accessDenied";
+		return "access_denied";
 	}
 }

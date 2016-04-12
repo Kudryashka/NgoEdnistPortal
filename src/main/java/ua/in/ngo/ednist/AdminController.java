@@ -83,7 +83,7 @@ public class AdminController {
 		model.addAttribute("controls", controls);
 		model.addAttribute("pageName", "help");
 		
-		return "admin_home";
+		return "admin/admin_home";
 	}
 	
 	/*
@@ -107,7 +107,7 @@ public class AdminController {
 		model.addAttribute("pageName", "Self info");
 		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
 		
-		return "admin_self_info";
+		return "admin/admin_self_info";
 	}
 	
 	@RequestMapping(value = "/self/edit", method = RequestMethod.GET)
@@ -123,7 +123,7 @@ public class AdminController {
 		model.addAttribute("pageName", "Self info editor");
 		model.addAttribute("selfInfo", selfService.getSelfInfoForm());
 		
-		return "admin_self_editor";
+		return "admin/admin_self_editor";
 	}
 	
 	@RequestMapping(value = "/self/edit", method = RequestMethod.POST)
@@ -164,7 +164,7 @@ public class AdminController {
 		model.addAttribute("polls", pollsToShow);
 		model.addAttribute("pollAnswerCounts", answerCounts);
 		
-		return "admin_polls_list";
+		return "admin/admin_polls_list";
 	}
 	
 	@RequestMapping(value="/polls/{alias}/answers", method = RequestMethod.GET)
@@ -185,7 +185,7 @@ public class AdminController {
 		model.addAttribute("poll", poll);
 		model.addAttribute("answers", answers);
 		
-		return "admin_polls_answers";
+		return "admin/admin_polls_answers";
 	}
 	
 	@RequestMapping(value="/polls/new")
@@ -216,7 +216,7 @@ public class AdminController {
 		model.addAttribute("controls", controls);
 		model.addAttribute("poll", poll);
 		
-		return "admin_polls_editor";
+		return "admin/admin_polls_editor";
 	}
 	
 	/*
@@ -244,7 +244,7 @@ public class AdminController {
 		model.addAttribute("pageName", "Projects list");
 		model.addAttribute("projects", projects);
 		
-		return "admin_projects_list";
+		return "admin/admin_projects_list";
 	}
 	
 	@RequestMapping(value = "/projects/new", method = RequestMethod.GET)
@@ -311,6 +311,6 @@ public class AdminController {
 		model.addAttribute("project", project);
 		model.addAttribute("pageName", "Project editor");
 		
-		return "admin_projects_editor";
+		return "admin/admin_projects_editor";
 	}
 }
