@@ -28,7 +28,9 @@ public class LocalConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(31556926);
+		registry.addResourceHandler("/resources/**")
+			.addResourceLocations("/resources/").setCachePeriod(31556926)
+			.addResourceLocations("file:/srv/static/ua.in.ngo.ednist/");
 	}
 	
 	@Override
@@ -46,7 +48,7 @@ public class LocalConfig extends WebMvcConfigurerAdapter {
 	public LocalSessionFactoryBean hibernateSessionFactory() throws Exception {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan("ua.in.ngo.ednist.polls.dao");
+		sessionFactory.setPackagesToScan("ua.in.ngo.ednist.polls.dao", "ua.in.ngo.ednist.projects.dao");
 		Properties hibernateProperties = new Properties();
 		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		hibernateProperties.setProperty("hibernate.connection.characterEncoding", "UTF-8");

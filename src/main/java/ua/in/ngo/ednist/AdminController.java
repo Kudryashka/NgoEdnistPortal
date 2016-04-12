@@ -1,6 +1,11 @@
 package ua.in.ngo.ednist;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,14 +14,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import ua.in.ngo.ednist.polls.PollNotFoundException;
 import ua.in.ngo.ednist.polls.PollService;
 import ua.in.ngo.ednist.polls.dao.Poll;
 import ua.in.ngo.ednist.polls.dao.PollAnswer;
+import ua.in.ngo.ednist.projects.Project;
+import ua.in.ngo.ednist.projects.ProjectNotFoundException;
+import ua.in.ngo.ednist.projects.ProjectService;
+import ua.in.ngo.ednist.projects.dao.ProjectImpl;
+import ua.in.ngo.ednist.projects.form.FormProject;
+import ua.in.ngo.ednist.upload.FileUploadService;
 import ua.in.ngo.ednist.util.Link;
 
 @Controller
@@ -35,14 +50,26 @@ public class AdminController {
 	}
 	
 	private PollService pollService;
+	private ProjectService projectService;
+	private FileUploadService fileUploadService;
 	
 	@Resource
 	public void setPollService(PollService pollService) {
 		this.pollService = pollService;
 	}
 	
-	//HOME PAGE MAPPING
+	@Resource
+	public void setProjectService(ProjectService projectService) {
+		this.projectService = projectService;
+	}
+
+	@Resource
+	public void setFileUploadService(FileUploadService fileUploadService) {
+		this.fileUploadService = fileUploadService;
+	}
 	
+	//HOME PAGE MAPPING
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String admin(Model model) {
 		logger.info("Administration panel requested.");
@@ -62,9 +89,9 @@ public class AdminController {
 	 * POLLS MAPPINGS
 	 * 
 	 * /admin/polls 				:: admin_polls_list
-	 * /admin/polls/new 			:: admin_polls_new_form
+	 * /admin/polls/new 			:: admin_polls_editor
 	 * /admin/polls/{alias}/answers :: admin_polls_answers
-     * /admin/polls/{alias}/edit 	:: admin_polls_edit_form
+     * /admin/polls/{alias}/edit 	:: admin_polls_editor
 	 * /admin/polls/{alias}/preview :: admin_polls_preview
 	 */
 	
@@ -144,22 +171,98 @@ public class AdminController {
 		return "admin_polls_editor";
 	}
 	
-	//PROJECTS MAPPINGS
+	/*
+	 * PROJECTS MAPPINGS
+	 * 
+	 * /admin/projects 					:: admin_projects_list
+	 * /admin/projects/new 				:: admin_projects_editor
+	 * /admin/projects/{alias}/edit 	:: admin_projects_editor
+	 * /admin/projects/{alias}/preview 	:: admin_projects_preview
+	 */
 	
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String projectsList(Model model) {
 		logger.info("Administration panel. Projects list.");
 		
 		List<Link> controls = new ArrayList<>();
+		controls.add(new Link("/admin/projects/new", "Create new project"));
 		controls.add(logoutLink);
 		
-		//Add projects as list with name 'projects'
+		List<Project> projects = projectService.allProjects();
 		
 		model.addAttribute("title", "Projects list page");
 		model.addAttribute("navigationMenu", adminNavigationMenu);
 		model.addAttribute("controls", controls);
 		model.addAttribute("pageName", "Projects list");
+		model.addAttribute("projects", projects);
 		
 		return "admin_projects_list";
+	}
+	
+	@RequestMapping(value = "/projects/new", method = RequestMethod.GET)
+	public String projectsNew(Model model) {
+		logger.info("New project create form requested.");
+		return prepareProjectsEditor(model, new FormProject());
+	}
+	
+	@RequestMapping(value = "/projects/new", method = RequestMethod.POST)
+	public String projectsSubmitNew(@ModelAttribute("project") FormProject project) {
+		logger.info("New project submitted by user.");
+		
+		Project persistedProject = projectService.saveNewProject(project);
+		
+		String imgUploadLocation = persistedProject.getId() + File.separator + "img"; 
+		String resolvedUploadLocation = fileUploadService.upload("project", imgUploadLocation, "img.png", project.getImgFile());
+		
+		return "redirect:/admin/projects";
+	}
+	
+	@RequestMapping(value = "/projects/{alias}/edit", method = RequestMethod.GET)
+	public String projectsEdit(@PathVariable("alias") String alias, Model model) 
+			throws ProjectNotFoundException {
+		logger.info("Project edit form requested.");
+		
+		Project persistedProject = projectService.getProjectByAlias(alias);
+		if (persistedProject == null) {
+			throw new ProjectNotFoundException(alias);
+		}
+
+		model.addAttribute("imgLocation", "/resources/project/" + persistedProject.getId() + File.separator + "img" + File.separator + "img.png");
+		return prepareProjectsEditor(model, persistedProject);
+	}
+	
+	@RequestMapping(value = "/projects/{alias}/edit", method = RequestMethod.POST)
+	public String projectsSubmitEdit(@ModelAttribute FormProject project, @PathVariable("alias") String alias) 
+			throws ProjectNotFoundException {
+		logger.info("Project edit form submitted by user.");
+		
+		Project persistedProject = projectService.getProjectByAlias(alias);
+		if (persistedProject == null) {
+			throw new ProjectNotFoundException(alias);
+		}
+		persistedProject.fill(project);		
+		projectService.editProject(persistedProject);
+		
+		String imgUploadLocation = persistedProject.getId() + File.separator + "img"; 
+		String resolvedUploadLocation = fileUploadService.upload("project", imgUploadLocation, "img.png", project.getImgFile());
+		
+		return "redirect:/admin/projects";
+	}
+	
+	private String prepareProjectsEditor(Model model, Project project) {
+		if (project != null) {
+			project = new FormProject().fill(project); 
+		}
+		
+		List<Link> controls = new ArrayList<>();
+		controls.add(new Link("/admin/projects", "Cancel"));
+		controls.add(logoutLink);
+		
+		model.addAttribute("title", "Project editor");
+		model.addAttribute("controls", controls);
+		model.addAttribute("project", project);
+		model.addAttribute("pageName", "Project editor");
+		
+		return "admin_projects_editor";
 	}
 }

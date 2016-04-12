@@ -1,0 +1,80 @@
+@CHARSET "UTF-8";
+
+body {
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+h1 {
+	margin: 1em;
+}
+
+/* Start of image preview container description */
+
+.content-with-image-preview {
+	display: table;
+	width: 100%;
+}
+
+.image-preview {
+	display: table-cell;
+	width: 25%;
+	text-align: center;
+}
+
+.image-preview > div {
+	padding: 1em;
+	border: 1px;
+	border-style: solid;
+}
+
+.image-preview img {
+	width: 100%;
+	color: red;
+}
+
+.image-preview p {
+	vertical-align: bottom;
+}
+
+.content-near-image-preview {
+	display: table-cell;
+	width: 100%;
+	vertical-align: top;
+	padding: 0 1em;
+}
+
+/* End of image preview container description */
+
+.value-box {
+	display: table;
+	width: 100%;
+}
+
+.label-at-left {
+	display: table-cell;
+	width: 10em;
+}
+
+.label-at-top {
+	display: block;
+}
+
+input[type="text"] {
+	display: table-cell;
+	width: 100%;
+}
+
+textarea {
+	width: 100%;
+	resize: vertical;
+}
+
+input[type="submit"] {
+	width: 30%;
+	display: block;
+	color: red;
+	margin: 1em auto;
+	font-size: 115%;
+	clear: both;
+}

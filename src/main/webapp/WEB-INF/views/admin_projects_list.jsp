@@ -25,14 +25,25 @@
 		<a href="${controlItem.uri }" class="control-link">${controlItem.name }</a>
 		</c:forEach>
 	</div>
-	<h1>${pageName }</h1>
-	<c:choose>
-	<c:when test="${fn:length(projects) > 0 }">
-		<!-- Show projects -->
-	</c:when>
-	<c:otherwise>
-		<p><center><strong>No one project found</strong></center>
-	</c:otherwise>
-	</c:choose>
+	<div class="page-content">
+		<h1>${pageName }</h1>
+		<c:choose>
+		<c:when test="${fn:length(projects) > 0 }">
+			<c:forEach var="project" items="${projects }">
+			<div class="content-list-item">
+				<div class="control-link-container">
+					<a href="/admin/projects/${project.uriAlias }/edit" class="control-link">Edit</a>
+					<a href="/projects/${project.uriAlias }" class="control-link">Go to project page</a>
+				</div>
+				<h2><a href="/projects/${project.uriAlias }">${project.name }</a></h2>
+				<p class="meta-info">${project.description }
+			</div>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<p><center><strong>No one project found</strong></center>
+		</c:otherwise>
+		</c:choose>
+	</div>
 </body>
 </html>
