@@ -29,7 +29,9 @@ public class SelfService {
 	@Transactional
 	public SelfInfo getSelfInfo() {
 		SelfInfo info = selfInfoDao.getSelfInfo();
-		info.setLogoPath("/resources/self/logo/logo.png");
+		if (info != null) {
+			info.setLogoPath("/resources/self/logo/logo.png");
+		}
 		return info;
 	}
 	
